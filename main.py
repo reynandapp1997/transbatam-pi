@@ -32,14 +32,14 @@ def sendCoordinates(lat, long):
 	}
 	response = requests.post(domain + 'api/location', data = body)
 	print response.text
-	time.sleep(5)
+	time.sleep(30)
 
 try:
 	print 'START'
 	while True:
 		button_state = GPIO.input(button_pin)
 		listenButtonPressed(button_state)
-		if state == False:
+		if state == True:
 			GPIO.output(led_green_pin, 1)
 			GPIO.output(led_red_pin, 0)
 
