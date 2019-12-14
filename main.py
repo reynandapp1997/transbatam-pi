@@ -31,7 +31,10 @@ def sendCoordinates(lat, long):
 		'busId': '5daeccb5ea6939001705f503'
 	}
 	response = requests.post(domain + 'api/location', data = body)
-	print response.text
+	if response.status_code == 201:
+		print "Berhasil mengirim koordinat"
+	else:
+		print "Tidak berhasil mengirim koordinat"
 	time.sleep(5)
 
 try:
