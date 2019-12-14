@@ -28,11 +28,11 @@ def sendCoordinates(lat, long):
 	body = {
 		'latitude': lat,
 		'longitude': long,
-		'busId': '5daeccabea6939001705f502'
+		'busId': '5daeccb5ea6939001705f503'
 	}
 	response = requests.post(domain + 'api/location', data = body)
 	print response.text
-	time.sleep(30)
+	time.sleep(5)
 
 try:
 	print 'START'
