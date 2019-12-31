@@ -5,6 +5,7 @@ from requests.exceptions import HTTPError
 import serial
 import string
 import pynmea2
+import threading
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -43,32 +44,35 @@ def sendCoordinates(lat, long):
 			print "Berhasil mengirim koordinat"
 		else:
 			print "Tidak berhasil mengirim koordinat"
-	time.sleep(5)
+
+def listenState():
+	threading.Timer(5.0, listenState).start()
+	global state
+	if state == True:
+		GPIO.output(led_green_pin, 1)
+		GPIO.output(led_red_pin, 0)
+
+		port="/dev/ttyAMA0"
+		ser=serial.Serial(port, baudrate=9600, timeout=0.5)
+		dataout = pynmea2.NMEAStreamReader()
+		newdata=ser.readline()
+
+		if newdata[0:6] == "$GPRMC":
+			newmsg=pynmea2.parse(newdata)
+			lat=newmsg.latitude
+			lng=newmsg.longitude
+			print lat
+			print lng
+			sendCoordinates(lat, lng)
+	else:
+		GPIO.output(led_red_pin, 1)
+		GPIO.output(led_green_pin, 0)
 
 try:
 	print 'START'
 	while True:
 		button_state = GPIO.input(button_pin)
 		listenButtonPressed(button_state)
-		if state == True:
-			GPIO.output(led_green_pin, 1)
-			GPIO.output(led_red_pin, 0)
-
-			port="/dev/ttyAMA0"
-			ser=serial.Serial(port, baudrate=9600, timeout=0.5)
-			dataout = pynmea2.NMEAStreamReader()
-			newdata=ser.readline()
-
-			if newdata[0:6] == "$GPRMC":
-				newmsg=pynmea2.parse(newdata)
-				lat=newmsg.latitude
-				lng=newmsg.longitude
-				print lat
-				print lng
-				sendCoordinates(lat, lng)
-		else:
-			GPIO.output(led_red_pin, 1)
-			GPIO.output(led_green_pin, 0)
 
 except KeyboardInterrupt:
 	print 'END'
