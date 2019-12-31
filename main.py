@@ -75,10 +75,10 @@ def listenButtonPressed():
 		button_state = GPIO.input(button_pin)
 		changeState(button_state)
 
-try:
-	print 'START'
-	Thread(target = listenButtonPressed).start()
-	Thread(target = listenState).start()
-except KeyboardInterrupt:
-	print 'END'
-	GPIO.cleanup()
+# try:
+# 	print 'START'
+Thread(target = listenButtonPressed).start()
+Thread(target = listenState).start()
+# except KeyboardInterrupt:
+# 	print 'END'
+# 	GPIO.cleanup()
