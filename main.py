@@ -35,9 +35,9 @@ def sendCoordinates(lat, long):
 		response = requests.post(domain + 'api/location', data = body)
 		response.raise_for_status()
 	except HTTPError as http_err:
-		print(f'HTTP error occurred: {http_err}')  # Python 3.6
+		print http_err
 	except Exception as err:
-		print(f'Other error occurred: {err}')  # Python 3.6
+		print err
 	else:
 		if response.status_code == 201:
 			print "Berhasil mengirim koordinat"
