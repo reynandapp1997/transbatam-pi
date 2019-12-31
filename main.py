@@ -22,6 +22,7 @@ GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 def listenButtonPressed(state_pressed):
 	global state
 	if state_pressed == False:
+		print "pressed"
 		state = not state
 		time.sleep(0.2)
 
@@ -68,7 +69,7 @@ def listenState():
 		GPIO.output(led_red_pin, 1)
 		GPIO.output(led_green_pin, 0)
 
-listenState()
+# listenState()
 
 try:
 	print 'START'
