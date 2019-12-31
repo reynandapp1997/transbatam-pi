@@ -45,7 +45,6 @@ def sendCoordinates(lat, long):
 			print "Berhasil mengirim koordinat"
 		else:
 			print "Tidak berhasil mengirim koordinat"
-	time.sleep(5)
 
 def listenState():
 	while True:
