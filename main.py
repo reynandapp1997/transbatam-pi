@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 import requests
+from requests.exceptions import HTTPError
 import serial
 import string
 import pynmea2
@@ -30,11 +31,18 @@ def sendCoordinates(lat, long):
 		'longitude': long,
 		'busId': '5daeccb5ea6939001705f503'
 	}
-	response = requests.post(domain + 'api/location', data = body)
-	if response.status_code == 201:
-		print "Berhasil mengirim koordinat"
+	try:
+		response = requests.post(domain + 'api/location', data = body)
+		response.raise_for_status()
+	except HTTPError as http_err:
+		print(f'HTTP error occurred: {http_err}')  # Python 3.6
+	except Exception as err:
+		print(f'Other error occurred: {err}')  # Python 3.6
 	else:
-		print "Tidak berhasil mengirim koordinat"
+		if response.status_code == 201:
+			print "Berhasil mengirim koordinat"
+		else:
+			print "Tidak berhasil mengirim koordinat"
 	time.sleep(5)
 
 try:
