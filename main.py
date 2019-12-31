@@ -5,6 +5,13 @@ from requests.exceptions import HTTPError
 import serial
 import string
 import pynmea2
+import threading
+
+def printit():
+  threading.Timer(5.0, printit).start()
+  print "Hello, World!"
+
+printit()
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
