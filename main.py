@@ -5,13 +5,6 @@ from requests.exceptions import HTTPError
 import serial
 import string
 import pynmea2
-import threading
-
-def printit():
-  threading.Timer(5.0, printit).start()
-  print "Hello, World!"
-
-printit()
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -52,11 +45,12 @@ def sendCoordinates(lat, long):
 			print "Tidak berhasil mengirim koordinat"
 	time.sleep(5)
 
+button_state = GPIO.input(button_pin)
+listenButtonPressed(button_state)
+
 try:
 	print 'START'
 	while True:
-		button_state = GPIO.input(button_pin)
-		listenButtonPressed(button_state)
 		if state == True:
 			GPIO.output(led_green_pin, 1)
 			GPIO.output(led_red_pin, 0)
