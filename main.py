@@ -68,6 +68,8 @@ def listenState():
 		GPIO.output(led_red_pin, 1)
 		GPIO.output(led_green_pin, 0)
 
+listenState()
+
 try:
 	print 'START'
 	while True:
