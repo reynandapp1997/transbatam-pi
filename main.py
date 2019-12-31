@@ -65,6 +65,7 @@ def listenState():
 				print lat
 				print lng
 				sendCoordinates(lat, lng)
+				time.sleep(5)
 		else:
 			GPIO.output(led_red_pin, 1)
 			GPIO.output(led_green_pin, 0)
