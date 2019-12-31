@@ -15,6 +15,9 @@ led_red_pin = 18
 led_green_pin = 23
 button_pin = 17
 
+port="/dev/ttyAMA0"
+ser=serial.Serial(port, baudrate=9600, timeout=0.5)
+
 GPIO.setup(led_red_pin, GPIO.OUT)
 GPIO.setup(led_green_pin, GPIO.OUT)
 GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -49,12 +52,11 @@ def sendCoordinates(lat, long):
 def listenState():
 	threading.Timer(5.0, listenState).start()
 	global state
+	global ser
 	if state == True:
 		GPIO.output(led_green_pin, 1)
 		GPIO.output(led_red_pin, 0)
 
-		port="/dev/ttyAMA0"
-		ser=serial.Serial(port, baudrate=9600, timeout=0.5)
 		dataout = pynmea2.NMEAStreamReader()
 		newdata=ser.readline()
 
