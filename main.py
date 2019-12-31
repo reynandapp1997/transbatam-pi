@@ -47,6 +47,7 @@ def sendCoordinates(lat, long):
 			print "Tidak berhasil mengirim koordinat"
 
 def listenState():
+	print "listenState"
 	while True:
 		global state
 		if state == True:
@@ -71,6 +72,7 @@ def listenState():
 			GPIO.output(led_green_pin, 0)
 
 def listenButtonPressed():
+	print "listenButtonPressed"
 	while True:
 		button_state = GPIO.input(button_pin)
 		changeState(button_state)
