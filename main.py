@@ -54,8 +54,8 @@ def listenState():
 			GPIO.output(led_green_pin, 1)
 			GPIO.output(led_red_pin, 0)
 
-		port="/dev/ttyAMA0"
-		ser=serial.Serial(port, baudrate=9600, timeout=0.5)
+			port="/dev/ttyAMA0"
+			ser=serial.Serial(port, baudrate=9600, timeout=0.5)
 			dataout = pynmea2.NMEAStreamReader()
 			newdata=ser.readline()
 
